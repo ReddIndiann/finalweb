@@ -20,7 +20,7 @@ const Widget = ({ type }) => {
         title: "USERS",
         isMoney: false,
         link: "See all users",
-        query:"users",
+        query:"userrs",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -36,7 +36,9 @@ const Widget = ({ type }) => {
       data = {
         title: "ORDERS",
         isMoney: false,
+        
         link: "View all orders",
+        query:"transactions",
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -64,7 +66,7 @@ const Widget = ({ type }) => {
     case "product":
       data = {
         title: "PRODUCTS",
-        query:"products",
+        query:"Product",
         link: "See details",
         icon: (
           <AccountBalanceWalletOutlinedIcon

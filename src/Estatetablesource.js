@@ -16,13 +16,13 @@ export const userColumns = [
   },
 
   {
-    field: "numberOfRooms",
-    headerName: "Number of rooms",
+    field: "Name",
+    headerName: "Name",
     width: 100,
   },
   {
-    field: "similarRoomsAvailable",
-    headerName: "Availables ",
+    field: "description",
+    headerName: "description",
     width: 100,
   },
   {
@@ -30,7 +30,11 @@ export const userColumns = [
     headerName: "Price",
     width: 100,
   },
-  
+  {
+    field: "quantity",
+    headerName: "quantity",
+    width: 100,
+  },
   {
     field: "Status",
     headerName: "Status",

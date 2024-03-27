@@ -21,11 +21,10 @@ const NewEstate = ({ inputs, title }) => {
   const [per, setPerc] = useState(null);
   const [numberOfRooms, setNumberOfRooms] = useState('');
 const [similarRoomsAvailable, setSimilarRoomsAvailable] = useState('');
+const [Name, setName] = useState('');
 const [Price, setPrice] = useState('');
-const [phone, setPhone] = useState('');
-const [password, setPassword] = useState('');
-const [address, setAddress] = useState('');
-const [country, setCountry] = useState('');
+const [description, setDescription] = useState('');
+const [quantity, setquantity] = useState('');
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -84,11 +83,12 @@ const [country, setCountry] = useState('');
         await addDoc(EstateCollectionRef, {
     
             
-          numberOfRooms,
+          Name,
        
-          similarRoomsAvailable,
+       
           Price,
-        
+        description,
+        quantity,
           timeStamp: serverTimestamp(),
         });  
       //      navigate("/movielist")
@@ -144,32 +144,42 @@ const [country, setCountry] = useState('');
                 />
               </div>
               <div className="formInput">
-    <label>Number of Rooms</label>
-    <input 
-      type="text" 
-      placeholder="rooms "
-      value={numberOfRooms}
-      onChange={(e) => setNumberOfRooms(Number(e.target.value))}
-    />
-  </div>
-  <div className="formInput">
-    <label>similar</label>
-    <input 
-      type="text" 
-      placeholder="similar"
-      value={similarRoomsAvailable}
-      onChange={(e) => setSimilarRoomsAvailable(Number(e.target.value))}
-    />
-  </div>
-  <div className="formInput">
-    <label>Price</label>
+              <div className="formInput">
+    <label>Name</label>
     <input 
       type="text" 
       placeholder="text"
-      value={Price}
-      onChange={(e) => setPrice(e.target.value)}
+      value={Name}
+      onChange={(e) => setName(e.target.value)}
     />
   </div>
+    <label>price</label>
+    <input 
+      type="number" 
+      placeholder="rooms "
+      value={Price}
+      onChange={(e) => setPrice(Number(e.target.value))}
+    />
+  </div>
+  <div className="formInput">
+    <label>description</label>
+    <input 
+      type="text" 
+      placeholder="similar"
+      value={description}
+      onChange={(e) => setDescription((e.target.value))}
+    />
+  </div>
+  <div className="formInput">
+    <label>quantity</label>
+    <input 
+      type="number" 
+      placeholder="similar"
+      value={quantity}
+      onChange={(e) => setquantity(Number(e.target.value))}
+    />
+  </div>
+ 
  
  
              
