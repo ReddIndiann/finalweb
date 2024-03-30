@@ -7,17 +7,40 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import React, { useState, useEffect } from 'react';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { db } from "../../firebase";
 
-const data = [
-  { name: "January", Total: 1200 },
-  { name: "February", Total: 2100 },
-  { name: "March", Total: 800 },
-  { name: "April", Total: 1600 },
-  { name: "May", Total: 900 },
-  { name: "June", Total: 1700 },
-];
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const Chart = ({ aspect, title }) => {
+  const [data, setData] = useState([]);
+   
+  useEffect(() => {
+    const q = query(collection(db, "transactions"), orderBy("timestamp", "desc"));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const groupedData = new Map();
+
+      querySnapshot.forEach((doc) => {
+        const date = doc.data().timestamp.toDate();
+        const monthYear = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+
+        // Initialize or update the total for the month
+        groupedData.set(monthYear, (groupedData.get(monthYear) || 0) + doc.data().purchaseQuantity);
+      });
+
+      // Create an array from the Map, sorted by month and year
+      const chartData = Array.from(groupedData)
+        .map(([name, Total]) => ({ name, Total }))
+        .sort((a, b) => new Date(a.name.split(' ')[1], monthNames.indexOf(a.name.split(' ')[0])) - new Date(b.name.split(' ')[1], monthNames.indexOf(b.name.split(' ')[0])));
+      
+      setData(chartData);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div className="chart">
       <div className="title">{title}</div>

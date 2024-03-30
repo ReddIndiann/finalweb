@@ -18,6 +18,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { House } from "@mui/icons-material";
+
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const navigate =useNavigate();
@@ -61,10 +62,13 @@ const Sidebar = () => {
               <span>Estate</span>
             </li>
           </Link>
+          <Link to="/orders" style={{ textDecoration: "none" }}>
           <li>
             <CreditCardIcon className="icon" />
             <span>Orders</span>
           </li>
+          </Link>
+        
           <li>
             <LocalShippingIcon className="icon" />
             <span>Delivery</span>

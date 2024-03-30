@@ -13,6 +13,8 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/AuthContext";
+import Orderlist from "./pages/Orderlist/Ordertlist";
+
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -27,6 +29,7 @@ function App() {
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
+          {/* auth */}
           <Route path="/">
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
@@ -38,6 +41,7 @@ function App() {
                 </RequireAuth>
               }
             />
+            {/* users */}
             <Route path="users">
               <Route
                 index
@@ -64,6 +68,7 @@ function App() {
                 }
               />
             </Route>
+            {/* product */}
             <Route path="products">
               <Route
                 index
@@ -120,7 +125,38 @@ function App() {
                 }
               />
             </Route>
+            {/* order */}
           </Route>
+          <Route path="orders">
+              <Route
+                index
+                element={
+                  <RequireAuth>
+                      <Orderlist />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path=":productId"
+                element={
+                  <RequireAuth>
+                    <Single />
+                  </RequireAuth>
+                }
+              />
+              
+              <Route
+                path="newestate"
+                element={
+                  <RequireAuth>
+                    <NewEstate inputs={EstateInputs} title="Add New Estate"/>
+
+                  </RequireAuth>
+                }
+              />
+            </Route>
+
+          
         </Routes>
       </BrowserRouter>
     </div>
