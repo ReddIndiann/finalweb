@@ -34,7 +34,7 @@ const Ordertable = () => {
 
     // LISTEN (REALTIME)
     const unsub = onSnapshot(
-      collection(db, "trasactions"),
+      collection(db, "transactions"),
       (snapShot) => {
         let list = [];
         snapShot.docs.forEach((doc) => {
