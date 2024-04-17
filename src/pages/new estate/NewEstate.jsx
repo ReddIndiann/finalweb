@@ -30,9 +30,8 @@ const [quantity, setquantity] = useState('');
   useEffect(() => {
     const uploadFile = () => {
       const name = new Date().getTime() + file.name;
+      const storageRef = ref(storage, `estates/${name}`); // Change the folder to 'estates'
 
-      console.log(name);
-      const storageRef = ref(storage, file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
@@ -66,50 +65,21 @@ const [quantity, setquantity] = useState('');
     file && uploadFile();
   }, [file]);
 
-  console.log(data);
-
-  const handleInput = (e) => {
-    const id = e.target.id;
-    const value = e.target.value;
-
-    setData({ ...data, [id]: value });
-  };
-  const EstateCollectionRef = collection(db ,"Estate")
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-
-      // try{
-        await addDoc(EstateCollectionRef, {
-    
-            
-          Name,
-       
-       
-          Price,
+      await addDoc(collection(db ,"Estate"), {
+        Name,
+        Price,
         description,
         quantity,
-          timeStamp: serverTimestamp(),
-        });  
-      //      navigate("/movielist")
-      //     }catch(err){
-      //       console.error(err)
-      //     }
-     
-      // await setDoc(doc(db, "Estate", ), {
-      //   numberOfRooms,
-       
-      //   similarRoomsAvailable,
-      //   Price,
-      
-      //   timeStamp: serverTimestamp(),
-      // });
+        timeStamp: serverTimestamp(),
+      });  
       navigate(-1);
     } catch (err) {
       console.log(err);
     }
   };
-  
 
   return (
     <div className="new">

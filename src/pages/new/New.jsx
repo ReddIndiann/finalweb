@@ -79,17 +79,29 @@ const [country, setCountry] = useState('');
     e.preventDefault();
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, "userrs", res.user.uid), {
+      const userId = res.user.uid;
+  
+      // Upload profile picture to Firebase Storage
+      const storageRef = ref(storage, `profilePictures/${userId}`);
+      await uploadBytesResumable(storageRef, file);
+  
+      // Get download URL of the uploaded image
+      const downloadURL = await getDownloadURL(storageRef);
+  
+      // Store user data in Firestore including profile picture URL
+      await setDoc(doc(db, "userrs", userId), {
         username,
         displayName,
         email,
         phone,
         address,
         country,
+        profilePicture: downloadURL, // Add profile picture URL to user data
         role: "user",
         timeStamp: serverTimestamp(),
       });
-      navigate(-1);
+  
+      navigate(-1); // Navigate back after successful registration
     } catch (err) {
       console.log(err);
     }
